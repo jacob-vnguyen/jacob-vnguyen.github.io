@@ -12,22 +12,23 @@
         <div id="header">
             <div class="container">
                 <nav>
-                    <img src="imgs/logo.png" alt="logo" class="logo">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Contact</a></li>
+                    <img src="imgs/logo2.png" alt="logo" class="logo">
+                    <ul id="sidemenu">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Skills</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
                     </ul>
+                    <i class="fa-solid fa-bars" onclick="openmenu()"></i>
                 </nav>
                 <div class="header-text">
-                    <p>
-                        Software Engineer
-                    </p>
                     <h1>
-                        Hi, I'm <span>Jacob</span><br>Nguyen From Canada
+                        Hi, I'm Jacob Nguyen 
                     </h1>
+                    <p>
+                        <span>Software Engineer</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -85,7 +86,7 @@
         <!--Services-->
         <section id="services">
             <div class="container">
-                <h1 class="sub-title">My Services</h1>
+                <h1 class="sub-title">Skills</h1>
                 <div class="services-list">
                     <div>
                         <i class="fa-solid fa-code"></i>
@@ -117,13 +118,13 @@
         <!-- portfolio -->
         <section id="portfolio">
             <div class="container">
-                <h1 class="sub-title">My Work</h1>
+                <h1 class="sub-title">Projects</h1>
                 <div class="work-list">
                     <div class="work">
                         <img src="imgs/work1.jpg">
                         <div class="layer">
                             <h3>
-                                Social Media App
+                                Project 1
                             </h3>
                             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima doloribus, id dolores maxime fuga quaerat voluptatem tempora. Eos, quas nobis voluptate non enim nulla dolorem eaque modi nemo! Dicta, sed?</p>
                             <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></i></a>
@@ -133,7 +134,7 @@
                         <img src="imgs/work2.jpg">
                         <div class="layer">
                             <h3>
-                                Music
+                                Project 2
                             </h3>
                             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima doloribus, id dolores maxime fuga quaerat voluptatem tempora. Eos, quas nobis voluptate non enim nulla dolorem eaque modi nemo! Dicta, sed?</p>
                             <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></i></a>
@@ -143,7 +144,7 @@
                         <img src="imgs/work3.jpg">
                         <div class="layer">
                             <h3>
-                                Online Shopping App
+                                Project 3
                             </h3>
                             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima doloribus, id dolores maxime fuga quaerat voluptatem tempora. Eos, quas nobis voluptate non enim nulla dolorem eaque modi nemo! Dicta, sed?</p>
                             <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></i></a>
@@ -170,22 +171,30 @@
                             <i class="fa-solid fa-phone"></i>
                             (123)-456-7890
                         </p>
+                        <a href="imgs/Jacob_Nguyen.pdf" download class="btn btn2">Download CV</a>
                     </div>
                     <div class="contact-right">
-                        <form>
+                        <form name="submit-to-google-sheet">
                             <input type="text" name="Name" placeholder="Your Name" required>
-                            <input type="email" name="email" placeholder="Your Email" required>
-                            <textarea name="message" rows="10" placeholder="Your Message"></textarea>
-                            <button type="submit">Submit</button>
+                            <input type="email" name="Email" placeholder="Your Email" required>
+                            <textarea name="Message" rows="10" placeholder="Your Message" required></textarea>
+                            <button type="submit" class="btn btn2">Submit</button>
                         </form>
+                        <span id="msg"></span>
                     </div>
                 </div>
+            </div>
+            <div class="copyright">
+                <p>
+                    Copyright © Jacob
+                </p>
             </div>
 
         </section>
         <script>
             var tablinks = document.getElementsByClassName("tab-links");
             var tabcontents = document.getElementsByClassName("tab-contents");
+            var sidemenu = document.getElementById("sidemenu")
 
             function opentab(tabname){
                 for(tablink of tablinks){
@@ -197,6 +206,33 @@
                 event.currentTarget.classList.add("active-link")
                 document.getElementById(tabname).classList.add("active-tab")
             }
+            function openmenu(){
+                sidemenu.style.right = "0";
+            }
+            function closemenu(){
+                sidemenu.style.right = "-200px";
+            }
+            
         </script>
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzzXdZd8h1pC1Z-iQ5GAAV1zUVS70hpw86EaB36nugu2UkmZgUIXl2we4c8qDwogMyf/exec'
+            const form = document.forms['submit-to-google-sheet']
+
+            const msg = document.getElementById("msg")
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    msg.innerHTML = "Message sent successfully"
+                    setTimeout(function(){
+                        msg.innerHTML = ""
+                    }, 5000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+            })
+        </script>
+        
     </body>
 </html>
